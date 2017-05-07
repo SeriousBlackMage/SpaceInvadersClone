@@ -20,7 +20,7 @@ function love.load()
       table.insert(player.bullets, bullet)
     end
   end
-  enemies_controller.spawnEnemy()
+  enemies_controller:spawnEnemy()
 
 end
 
