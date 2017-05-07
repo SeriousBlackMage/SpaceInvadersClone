@@ -1,3 +1,8 @@
+enemy = {}
+enemies_controller = {}
+enemies_controller.enemies = {}
+--Diese Deklarationen müssen Vor love.load stehen ,da sie in den Funktionen unten sonst noch nicht initialisiert sind
+--Eine "Globale" Funktionsdeklaration Passiert vor love.load
 
 function love.load()
   player = {}
@@ -13,11 +18,32 @@ function love.load()
       bullet.x = player.x + 35
       bullet.y = player.y
       table.insert(player.bullets, bullet)
+    end
   end
-  end
+  enemies_controller.spawnEnemy()
 
 end
 
+function enemies_controller:spawnEnemy()
+  enemy = {}
+  enemy.x = 0
+  enemy.y = 0
+  enemy.cooldown = 20
+  enemy.bullets = {}
+  enemy.speed = 10
+  table.insert(self.enemies, enemy)
+end
+--self ist das Codeword für Das Object links von dem : und funktioniert nur innerhalb der Funktion
+
+function enemy:fire() -- : Sagt ,dass fire() zu enemy gehört
+  if self.cooldown <= 0 then
+    self.cooldown = 20
+    bullet = {}
+    bullet.x = self.x + 35
+    bullet.y = self.y
+    table.insert(self.bullets, bullet)
+  end
+end
 
 function love.update()
   player.cooldown = player.cooldown - 1
